@@ -14,6 +14,6 @@
 
 There is no frontend to launch and no development server or `npm run dev` command. No build, account, database, environment file, or API key is required. Node runs tests only; it does not establish a backend technology choice. If `npm` is missing, restart VS Code after installing Node. If `package.json` is missing, check the terminal's current folder.
 
-Explore `src/missions/level1/config.js` and `src/simulation/spacecraft-state.js` for the implemented logic. Read [architecture](architecture.md) before developing a subsystem. The design team owns the unfinished Figma direction; frontend implementation and tooling should follow agreed design and technology decisions.
+Explore `src/missions/level1/config.js` and `src/simulation/spacecraft-state.js` for the implemented logic. Read [architecture](architecture.md) before developing a subsystem.
 
 GitHub changes become available to teammates after commits are pushed and merged. Follow [contributing](contributing.md) for the collaboration workflow.
