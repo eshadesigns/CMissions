@@ -2,8 +2,6 @@
 
 The repository is at the foundation stage. JavaScript is the primary application language, with ES modules for independent mission data and state initialization. There is no frontend, HTML entry point, development server, backend, or application framework. Node's built-in test runner verifies the implemented logic.
 
-The Design Lead/Product Owner and design team own the Figma design direction. It is not finalized and is subject to change; this repository does not approximate it. Subsystem owners should research and justify technology choices before implementation. These boundaries do not select React, Firebase, Three.js, an editor, or a C++ execution tool.
-
 Mission configuration (`missions/level1/config.js`) owns ID, descriptions, learning concepts, subsystem defaults, illustrative battery settings, and the intended success condition. `simulation/spacecraft-state.js` copies defaults into independent mutable state: `{ batteryVoltage, subsystems }`. Each subsystem has `id`, `name`, `essential`, `poweredOn`, and `operatingState`. Power and operating state are distinct fields; future transition rules must define their relationship. Initialization performs no battery physics or automatic load shedding.
 
 Example imports from a future module located in `src/simulation/`:
