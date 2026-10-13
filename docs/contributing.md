@@ -1,6 +1,6 @@
 # Contributing
 
-Use readable JavaScript ES modules. Keep mission data, simulation state, UI, and integration adapters separate. Subsystem owners should research and justify dependencies and architectural choices with the team before adding them. The Design Lead/Product Owner and design team own the unfinished Figma direction; do not implement or approximate a frontend design at this stage. Never commit credentials or execute student code with `eval()` or `new Function()`.
+Use readable JavaScript ES modules. Keep mission data, simulation state, UI, and integration adapters separate.
 
 Start from the repository's default branch (replace `<default-branch>` with the branch shown on GitHub):
 
