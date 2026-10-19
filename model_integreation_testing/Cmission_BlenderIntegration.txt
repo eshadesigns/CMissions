@@ -1,0 +1,40 @@
+
+//How to integrate Blender into Website:
+
+1) Ensure Models Are Optimized for the Browser:
+
+    Preferably low polygon+ clean topology (Flipping Normals & Deleting Faces that won't be seen)
+    Bake textures (light and shadows to the texture) to reduce GPU loads (go for .01)
+    Export as gltF (.glb/.gltf) (with Y up, UVs, & Normals)
+
+-- Y up are the standard xy system
+-- gltf is optimze for the web
+
+2) To quickly Check if the Model is Okay
+    a. go to threejs.org/editor/
+    b. file->import-><blenderfile.gltf>
+    c. add->light (in blender, there are scripts)
+
+3) Coding
+    a. Create Project File
+        I. index. html, main.js, style.css
+        II. using Webgl (low level programming) & three.js
+    ---https://threejs.org/ for documentation
+    -- in termial for compling & will be copied to dist/folder: npx vite build
+
+
+
+
+
+--JavaScript: WebGL library like Three.js -> renders & animates the model
+
+
+
+https://www.youtube.com/watch?v=yhtdkuw9mbM (5 hrs)
+
+- Web Devlopment with Three.js & Blender
+
+
+
+https://www.youtube.com/watch?v=tdsQwuyS6DQ
+(be warned its 8 hrs:)
