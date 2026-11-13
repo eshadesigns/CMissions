@@ -30,9 +30,6 @@
             needs a loader, import the librabies, add it the scene just like normal importing.
 
 
-
-
-
 --JavaScript: WebGL library like Three.js -> renders & animates the model
 
 

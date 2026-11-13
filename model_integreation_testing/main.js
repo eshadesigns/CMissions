@@ -27,8 +27,15 @@
     //gltf loader
     const loader= new GLTFLoader();
 
+    //animation mode constants
+    const ani={
+        idle: 'idle',
+        explode: 'explode'
+    }
+
     //reuseable loader
-    function loadModels(modelName, location={x:0,y:0,z:0}){
+    const mixer=[]; //needed for animtions
+    function loadModels(modelName, location={x:0,y:0,z:0}, anime='idle'){
         const path=model_paths[modelName]; //gets the path
         if(!path){return;} //invaild path
 
@@ -38,12 +45,29 @@
             //      (as in it looks for that one)
             path,
             function(glb){
+                //model==glb.scene
+
                 //location
                 glb.scene.position.set(location.x, location.y, location.z);
                 //prints to the console
                 console.log(glb.scene.children[0].name);
                 //adds it to the scene
                 scene.add(glb.scene);
+
+                //animation
+                if(glb.animations && glb.animations.length>0){
+                    const mixer_element=new THREE.AnimationMixer(glb.scene);
+                    mixer.push(mixer_element);
+
+                    if (anime=='explode') {
+                        const action = mixer.clipAction(glb.animations[1]);
+                    } else { //idle
+                        const action = mixer.clipAction(glb.animations[0]);
+                    }
+                    action.play();
+
+                }
+
             },
             undefined,
             function(error){
@@ -79,31 +103,12 @@
     controls.update();
 //______________________________________________________________________________________
 
-//3) Model:
+//3) LOADING IN {STATIC/ANIMATION} MODELS:
 loadModels('test',{x:0,y:0,z:0});
-
-    // loader.load(
-    //     //path to model file
-    //     model_paths.test,
-    //     function(glb){
-    //         console.log(glb.scene.children[0].name);
-    //         scene.add(glb.scene);
-    //     },
-    //     undefined,
-    //     function(error){
-    //         console.error(error);
-    //     }
-    // );
     const light = new THREE.AmbientLight( 0x404040 ,3); // soft white light
     scene.add( light );
 
-
-//     const geometry = new THREE.BoxGeometry( 1, 2, 1 );
-//     const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-//     const cube = new THREE.Mesh( geometry, material );
-//
-// //4) adds to the scene
-//     scene.add( cube );
+//4) For animation models
 
 //______________________________________________________________________
 //resize func
