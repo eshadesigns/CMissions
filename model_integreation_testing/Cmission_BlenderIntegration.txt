@@ -40,3 +40,6 @@ https://www.youtube.com/watch?v=tdsQwuyS6DQ
 
 --Blender Animation & Three.js
 https://www.youtube.com/watch?v=GByT8ActvDk&t=2s
+
+--Three.js Tutorial for Absolute Beginners
+https://www.youtube.com/watch?v=xJAfLdUgdc4
