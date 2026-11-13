@@ -90,11 +90,6 @@
 
 //2) Camera
     const camera= new THREE.PerspectiveCamera(75, sizes.width /sizes.height);
-    //{
-//     "x": 0.2240011324121139,
-//     "y": 0.5558287981919455,
-//     "z": 1.3327264583980014
-// }
     camera.position.x = 0.2240011324121139;
     camera.position.y = 0.5558287981919455;
     camera.position.z = 1.3327264583980014;
@@ -105,11 +100,10 @@
 //______________________________________________________________________________________
 
 //3) LOADING IN {STATIC/ANIMATION} MODELS:
-loadModels('test',{x:0,y:0,z:0});
+loadModels('test',{x:0,y:0,z:0},'idle');
     const light = new THREE.AmbientLight( 0x404040 ,3); // soft white light
     scene.add( light );
 
-//4) For animation models
 
 //______________________________________________________________________
 //resize func
