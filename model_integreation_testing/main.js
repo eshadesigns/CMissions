@@ -1,3 +1,7 @@
+
+//CURRENTLY WORKING ON:
+// GETING BLENDER ANIMATION TO PLAY IN THE INTEGRATED SECTION OF THE
+
 //importing the three.js lib & orbital controls for movement (by user)
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -22,6 +26,32 @@
 
     //gltf loader
     const loader= new GLTFLoader();
+
+    //reuseable loader
+    function loadModels(modelName, location={x:0,y:0,z:0}){
+        const path=model_paths[modelName]; //gets the path
+        if(!path){return;} //invaild path
+
+        loader.load(
+            //path to model file
+            // SAME AS model_paths.modelName
+            //      (as in it looks for that one)
+            path,
+            function(glb){
+                //location
+                glb.scene.position.set(location.x, location.y, location.z);
+                //prints to the console
+                console.log(glb.scene.children[0].name);
+                //adds it to the scene
+                scene.add(glb.scene);
+            },
+            undefined,
+            function(error){
+                console.error(error);
+            }
+        );
+
+    }
 
 //----------------------------------------------------------
 
@@ -50,19 +80,20 @@
 //______________________________________________________________________________________
 
 //3) Model:
+loadModels('test',{x:0,y:0,z:0});
 
-    loader.load(
-        //path to model file
-        model_paths.test,
-        function(glb){
-            console.log(glb.scene.children[0].name);
-            scene.add(glb.scene);
-        },
-        undefined,
-        function(error){
-            console.error(error);
-        }
-    );
+    // loader.load(
+    //     //path to model file
+    //     model_paths.test,
+    //     function(glb){
+    //         console.log(glb.scene.children[0].name);
+    //         scene.add(glb.scene);
+    //     },
+    //     undefined,
+    //     function(error){
+    //         console.error(error);
+    //     }
+    // );
     const light = new THREE.AmbientLight( 0x404040 ,3); // soft white light
     scene.add( light );
 

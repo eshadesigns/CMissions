@@ -22,6 +22,13 @@
     ---https://threejs.org/ for documentation
     -- in termial for compling & will be copied to dist/folder: npx vite build
 
+4) Blender Animation Exportion with three.js
+    1) export as glb 2.0 (<filename>.glb)
+        MAKE SURE TO HAVE THE ANIMATION BOX CHECKED BEFORE CLICKING EXPORT
+    2) Again test the model in the threejs.org/editor/ (click on the model name and click play under ANIMATIONS)
+    3) Coding templeate:
+            needs a loader, import the librabies, add it the scene just like normal importing.
+
 
 
 
@@ -29,12 +36,10 @@
 --JavaScript: WebGL library like Three.js -> renders & animates the model
 
 
-
-https://www.youtube.com/watch?v=yhtdkuw9mbM (5 hrs)
-
+Resources:
 - Web Devlopment with Three.js & Blender
-
-
-
+https://www.youtube.com/watch?v=yhtdkuw9mbM
 https://www.youtube.com/watch?v=tdsQwuyS6DQ
-(be warned its 8 hrs:)
+
+--Blender Animation & Three.js
+https://www.youtube.com/watch?v=GByT8ActvDk&t=2s
