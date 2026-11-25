@@ -1,5 +1,3 @@
-// Added by Sydney
-
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { executeCpp } from '../src/services/cpp-execution.js';
@@ -26,6 +24,20 @@ test('rejects empty C++ source without making a request', async () => {
   );
 
   assert.equal(called, false);
+});
+
+test('rejects source code that exceeds the size limit', async () => {
+  await assert.rejects(
+    executeCpp({ sourceCode: 'a'.repeat(100_001), fetchImpl: async () => {} }),
+    /must not exceed/
+  );
+});
+
+test('rejects an invalid spacecraft input snapshot', async () => {
+  await assert.rejects(
+    executeCpp({ sourceCode: 'int main() {}', inputSnapshot: [], fetchImpl: async () => {} }),
+    /inputSnapshot must be an object/
+  );
 });
 
 test('submits C++ and returns decoded output', async () => {
@@ -57,6 +69,7 @@ test('submits C++ and returns decoded output', async () => {
   assert.equal(requestUrl.origin, 'https://compiler.example.com');
   assert.equal(requestUrl.pathname, '/submissions');
   assert.equal(requestUrl.searchParams.get('wait'), 'true');
+  assert.equal(requestUrl.searchParams.get('base64_encoded'), 'true');
   assert.equal(requestOptions.method, 'POST');
 
   const body = JSON.parse(requestOptions.body);
@@ -77,6 +90,8 @@ test('submits C++ and returns decoded output', async () => {
   assert.equal(result.stderr, '');
   assert.equal(result.compileOutput, '');
   assert.equal(result.exitCode, 0);
+  assert.equal(result.time, '0.01');
+  assert.equal(result.memory, 2048);
 });
 
 test('returns compiler diagnostics when compilation fails', async () => {
@@ -87,9 +102,7 @@ test('returns compiler diagnostics when compilation fails', async () => {
         status: { id: 6, description: 'Compilation Error' },
         stdout: null,
         stderr: null,
-        compile_output: Buffer.from('error: expected declaration').toString(
-          'base64'
-        ),
+        compile_output: Buffer.from('error: expected declaration').toString('base64'),
         exit_code: null,
       }),
   });
@@ -99,6 +112,24 @@ test('returns compiler diagnostics when compilation fails', async () => {
   assert.match(result.compileOutput, /expected declaration/);
 });
 
+test('returns runtime failure without marking it as successful', async () => {
+  const result = await executeCpp({
+    sourceCode: 'int main() { return 1; }',
+    fetchImpl: async () =>
+      mockResponse({
+        status: { id: 3, description: 'Accepted' },
+        stdout: null,
+        stderr: Buffer.from('program failed').toString('base64'),
+        compile_output: null,
+        exit_code: 1,
+      }),
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.exitCode, 1);
+  assert.equal(result.stderr, 'program failed');
+});
+
 test('reports HTTP errors from the execution provider', async () => {
   await assert.rejects(
     executeCpp({
@@ -106,5 +137,15 @@ test('reports HTTP errors from the execution provider', async () => {
       fetchImpl: async () => mockResponse({}, 503),
     }),
     /HTTP 503/
+  );
+});
+
+test('reports invalid JSON from the execution provider', async () => {
+  await assert.rejects(
+    executeCpp({
+      sourceCode: 'int main() { return 0; }',
+      fetchImpl: async () => ({ ok: true, json: async () => { throw new Error('bad json'); } }),
+    }),
+    /invalid JSON/
   );
 });
